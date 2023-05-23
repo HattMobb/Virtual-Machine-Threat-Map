@@ -11,7 +11,8 @@ Create a vulnerable machine and locate attackers around the world.
 1) Once signed up/ logged in to Azure, create a Windows 10 Pro virtual machine and assign it to a resource group for this lab. (MAKE A NOTE OF USERNAME AND PASSWORD)
 2) Proceed through set up and once at Networking, in "NIC network security group" click Advanced - Create New.
 3) Remove any exisiting security groups and add an inobund rule as shown below. This increases the visability and vulnrability of the machine.
-![VM setup](./pics/Security_group.png)
+![Security_group](https://github.com/HattMobb/Virtual-Machine-Threat-Map/assets/134090089/71e3c406-5520-444d-b6a0-56860dd26f0a)
+
 4) Finalize VM steps and wait for it to be created.
 
 ## Log Analytics set-up - this allows logs to be drawn from the VM.
@@ -34,7 +35,7 @@ Create a vulnerable machine and locate attackers around the world.
 ### VM script config
 1) Get your VM IP from the VM tab as shown below.
 2) Use RDP on your own machine to log into the VM, using the IP provided and your name and password from the VM set up stage.
-3) ![Slide 2](pics/VM_view.png)
+![VM_view](https://github.com/HattMobb/Virtual-Machine-Threat-Map/assets/134090089/de03d39a-4e1b-4271-99e3-3ccfd2041864)
 4) Head to Windows Firewall within the VM and turn OFF all firewall features, making it discoverable to others.
 5) This lab focuses on using a failed log-in attempt to locate an attacker. This event has the Event ID of 4625 within Event Viewer.
 6) Copy and paste the Custom_Security_Log_Exporter.ps1 script into the VM Desktop. Running the script in Powershell will provide the log of any attacker trying to log into the VM, providing their IP and the username they tried like so;
@@ -44,11 +45,18 @@ latitude:38.49290,longitude:102.19476,destinationhost:honeypot-vm,username:çš„ç”
 ### Create custom log in Azure to display script results
 1) Go to your Log workspace - Custom logs - Add - Copy and Paste sample data from the script provided - Give the rule a name and save.
 2) The above is used to "train" the analytics feature to display the infomation from the script output.
-![Slide 2](./pics/query.png)
-4) Within Query you can search(Run) for results of the rule you just created to see results directly from the VM.
-![Slide 2](./pics/log-output.png)
+![query](https://github.com/HattMobb/Virtual-Machine-Threat-Map/assets/134090089/6ae62188-914c-4ca4-a4aa-0fe6c3ef0cb3)
+
+
+3) Within Query you can search(Run) for results of the rule you just created to see results directly from the VM.
+
+![log-output](https://github.com/HattMobb/Virtual-Machine-Threat-Map/assets/134090089/de9f5f8f-b3a7-44cf-9010-ef0763d279df)
+
 4) To extract data from results; right-click any result - extract field - highlight the RESULT of each desired field and give it a relevant name in "field_name". See below image or https://learn.microsoft.com/en-us/azure/azure-monitor/logs/custom-fields for help.
-![Slide 3](./pics/custom-fields.png)
+
+![custom-fields](https://github.com/HattMobb/Virtual-Machine-Threat-Map/assets/134090089/2220bb66-c3a8-438d-ac1b-1ca97742673d)
+
+
 5) Repeat for each value of Latitude,Longitude, Destinaiton host, Username, Sourcehost, State, Country, Label and timestamp. This will give you a clean output of results and allow proper display on the map.
 
 ### Map display
@@ -60,4 +68,6 @@ latitude:38.49290,longitude:102.19476,destinationhost:honeypot-vm,username:çš„ç”
 ## ALL DONE!
 
 Running the script on your VM will now lead to results being displayed on a heatmap of the globe with an active count of failed RDP attempts by country.
-![Slide 2](./pics/map.png)
+
+![map](https://github.com/HattMobb/Virtual-Machine-Threat-Map/assets/134090089/6275fa7e-595c-4cc6-bbd8-d49579057a75)
+
